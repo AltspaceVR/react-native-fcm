@@ -61,4 +61,23 @@ public class MessagingService extends FirebaseMessagingService {
 
         }
     }
+
+    /**
+     * Called if InstanceID token is updated. This may occur if the security of
+     * the previous token had been compromised. This call is initiated by the
+     * InstanceID provider.
+     */
+    // [START refresh_token]
+    @Override
+    public void onNewToken(String refreshedToken) {
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
+
+        // Broadcast refreshed token
+
+        Intent i = new Intent("com.evollu.react.fcm.FCMRefreshToken");
+        Bundle bundle = new Bundle();
+        bundle.putString("token", refreshedToken);
+        i.putExtras(bundle);
+        sendBroadcast(i);
+    }    
 }
